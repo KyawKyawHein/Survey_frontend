@@ -5,16 +5,10 @@ import { useStateContext } from '../context/StateContext'
 
 const Dashboard = () => {
     const {setUser,user} = useStateContext()
-    // useEffect(()=>{
-    //     axiosClient.get('/user')
-    //     .then(({data})=>{
-    //         setUser(data);
-    //     })
-    // },[])
     return (
         <>
            <PageComponent title="Dashboard">
-                <h1>hello</h1>{user? user.name:''}
+                <h1>hello</h1>{user&&user.name}
            </PageComponent>
         </>
     )

@@ -3,14 +3,14 @@ import React from 'react'
 import TButton from './core/TButton';
 
 const SurveyListItem = (props) => {
-    const {id,image_url,slug,title,description} = props;
+    const {id,image,slug,title,description} = props;
     const onDeleteClick = ()=>{
 
     }
     return (
         <>
             <div className="flex flex-col py-4 px-6 shadow-md bg-white hover:bg-gray-50 h-[470px]">
-                <img src={image_url} alt={title}  className="w-full h-48 object-cover"  />
+                <img src={image} alt={title}  className="w-full h-48 object-cover"  />
                 <h4 className='mt-4 text-lg font-bold'>{title}</h4>
                 <div
                     dangerouslySetInnerHTML={{__html:description}}

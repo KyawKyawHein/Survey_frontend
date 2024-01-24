@@ -3,9 +3,11 @@ import { useState } from "react";
 import TButton from '../core/TButton';
 import SurveyQuestions from "../SurveyQuestions";
 import { PhotoIcon } from '@heroicons/react/24/outline';
-import axiosClient from '../../axios-client';
+import { useSurvey } from '../../hooks/UseSurvey';
+import { useNavigate } from 'react-router-dom';
 
 const SurveyForm = () => {
+    const nav = useNavigate();
     const [survey, setSurvey] = useState({
         title: "",
         description: "",
@@ -15,22 +17,24 @@ const SurveyForm = () => {
         questions: [],
         status: false
     })
+
+    const {useSurveyCreateMutation} = useSurvey()
+    const { mutateAsync:newSurvey} = useSurveyCreateMutation()
+
     const [error, setError] = useState({})
-    const createSurvey = (e) => {
+    const createSurvey = async(e) => {
         e.preventDefault();
-        const payload = { ...survey };
-        if (payload.image) {
-            payload.image = payload.image_url;
+        try {
+            const payload = { ...survey };
+            if (payload.image) {
+                payload.image = payload.image_url;
+            }
+            delete payload.image_url; 
+            await newSurvey(payload)
+            nav('/surveys')
+        } catch (error) {
+            console.log(error);
         }
-        delete payload.image_url;
-        axiosClient.post('/survey', payload)
-            .then(({ data }) => console.log((data)))
-            .catch((err) => {
-                console.log(err);
-                if (err && err.response.status == 422) {
-                    setError(err.response.data.errors);
-                }
-            })
     }
     const onImageChoose = (e) => {
         const file = e.target.files[0];

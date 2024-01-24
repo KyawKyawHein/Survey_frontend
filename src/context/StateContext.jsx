@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useUser } from "../hooks/useUser";
 
 const StateContext = createContext({
     user : null,
@@ -178,8 +179,9 @@ export const StateContextProvider = ({children})=>{
     ]
     const [user,setUser] = useState(null);
     const [token,_setToken] = useState(localStorage.getItem('ACCESS_TOKEN')??null);
-    const [surveys,setSurveys] = useState(tmpSurveys);
     const [questionTypes] = useState(['text','select','radio','checkbox','textarea']);
+    // const {useUserQuery} = useUser()    
+    // const { data:currentUser } = useUserQuery();
     const setToken = (token)=>{
         _setToken(token)
         if(token){
@@ -188,10 +190,14 @@ export const StateContextProvider = ({children})=>{
             localStorage.removeItem('ACCESS_TOKEN',token);
         }
     }
+    // const getUser = ()=>{
+    //     setUser(currentUser);
+    // }
+    // useEffect(()=>{
+        // getUser()
+    // },[token])
 
-
-
-    const data = {user,setUser,token,setToken,surveys,setSurveys,questionTypes};
+    const data = {user,setUser,token,setToken,questionTypes};
     return(
         <StateContext.Provider value={data}>
             {children}

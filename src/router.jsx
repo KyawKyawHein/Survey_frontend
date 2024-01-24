@@ -5,9 +5,7 @@ import GuestLayout from "./components/layout/GuestLayout";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Dashboard from "./views/Dashboard";
-import EditSurvey from "./views/EditSurvey";
 import SurveyView from "./views/SurveyView";
-import SurveyCreate from "./views/SurveyCreate";
 
 const router = createBrowserRouter([
     {
@@ -28,15 +26,11 @@ const router = createBrowserRouter([
             },
             {
                 path : "/surveys/:id",
-                element: <EditSurvey/>
-            },
-            {
-                path : "/view/survey/:slug",
-                element : <SurveyView/>
+                element: <SurveyView/>
             },
             {
                 path : "/survey/create",
-                element : <SurveyCreate/>
+                element : <SurveyView/>
             }
         ]
     },

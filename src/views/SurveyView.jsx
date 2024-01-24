@@ -1,7 +1,14 @@
+import { useParams } from "react-router-dom";
+import PageComponent from "../components/PageComponent";
+import SurveyForm from "../components/Survey/SurveyForm";
+
 const SurveyView = () => {
+    const {id} = useParams()
     return (
         <>
-            <h1>hh</h1>
+            <PageComponent title={id ? "Edit Survey" : "Create Survey"}>
+                <SurveyForm id={id ?? null} />
+            </PageComponent>
         </>
     )
 }

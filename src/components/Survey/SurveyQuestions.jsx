@@ -2,6 +2,7 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import React, { useEffect, useState } from 'react';
 import {v4 as uuidv4} from 'uuid';
 import QuestionEditor from './QuestionEditor';
+import NoSurveyQuestion from './NoSurveyQuestion';
 
 const SurveyQuestions = ({questions,onQuestionUpdate}) => {
     const [model,setModel]  = useState([...questions]);
@@ -59,9 +60,7 @@ const SurveyQuestions = ({questions,onQuestionUpdate}) => {
                             deleteQuestion={deleteQuestion}
                         />
                     ))):
-                <div className="text-gray-400 text-center py-4">
-                    You don't have any questions created.
-                </div>
+                    <NoSurveyQuestion message={"You don't have any questions created."}/>
             }
         </>
     );

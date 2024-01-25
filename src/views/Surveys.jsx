@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import PageComponent from '../components/PageComponent'
-import SurveyListItem from '../components/SurveyListItem';
+import SurveyListItem from '../components/Survey/SurveyListItem';
 import TButton from '../components/core/TButton';
 import { PlusCircleIcon } from '@heroicons/react/24/outline';
 import axiosClient from '../axios-client';
 import PaginationLink from '../components/PaginationLink';
+import { useStateContext } from '../context/StateContext';
 
 const Surveys = () => {
+    const {showToast} = useStateContext()
     const [surveys,setSurveys] = useState([]);
     const [meta,setMeta] = useState();
     const [loading,setLoading] = useState(false);
@@ -25,6 +27,18 @@ const Surveys = () => {
             console.log(err)
         })
     }
+
+    // delete survey
+    const deleteSurvey = (id)=>{
+        if(window.confirm("Are you sure you want to delete this survey?")){
+            axiosClient.delete(`/survey/${id}`)
+            .then(()=>{
+                getSurveys()
+                showToast("Survey is deleted.")
+            })
+        }
+    }
+
     useEffect(()=>{
         getSurveys()
     },[])
@@ -51,7 +65,7 @@ const Surveys = () => {
                         {
                             surveys ? surveys.map(survey => {
                                 return (
-                                    <SurveyListItem key={survey.id} {...survey}/>
+                                    <SurveyListItem key={survey.id} {...survey} deleteSurvey={deleteSurvey}/>
                                 )
                             }) : ''
                         }

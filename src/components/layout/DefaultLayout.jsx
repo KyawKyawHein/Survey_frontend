@@ -4,6 +4,7 @@ import Nav from '../Nav';
 import {Navigate, Outlet } from 'react-router-dom';
 import { useUser } from '../../hooks/useUser';
 import axiosClient from '../../axios-client';
+import Toast from '../Toast';
 
 const DefaultLayout = () => {
   const {token,setUser,setToken} = useStateContext()
@@ -21,6 +22,7 @@ const DefaultLayout = () => {
     <div className="min-h-full">
       <Nav/>
       <Outlet/>
+      <Toast/>
     </div>
   )
 }

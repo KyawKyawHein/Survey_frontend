@@ -6,7 +6,11 @@ const StateContext = createContext({
     token : null,
     setUser : ()=>{},
     setToken : ()=>{},
-    questionTypes : []
+    questionTypes : [],
+    toast : {
+        message : '',
+        show :false
+    }
 });
 
 export const StateContextProvider = ({children})=>{
@@ -180,6 +184,7 @@ export const StateContextProvider = ({children})=>{
     const [user,setUser] = useState(null);
     const [token,_setToken] = useState(localStorage.getItem('ACCESS_TOKEN')??null);
     const [questionTypes] = useState(['text','select','radio','checkbox','textarea']);
+    const [toast,setToast] = useState({message:'',show:false})
     // const {useUserQuery} = useUser()    
     // const { data:currentUser } = useUserQuery();
     const setToken = (token)=>{
@@ -190,6 +195,12 @@ export const StateContextProvider = ({children})=>{
             localStorage.removeItem('ACCESS_TOKEN',token);
         }
     }
+    const showToast=(message)=>{
+        setToast({message,show:true})
+        setTimeout(() => {
+            setToast({message,show:false})
+        }, 3000);
+    }
     // const getUser = ()=>{
     //     setUser(currentUser);
     // }
@@ -197,7 +208,7 @@ export const StateContextProvider = ({children})=>{
         // getUser()
     // },[token])
 
-    const data = {user,setUser,token,setToken,questionTypes};
+    const data = {user,setUser,token,setToken,questionTypes,toast,showToast};
     return(
         <StateContext.Provider value={data}>
             {children}

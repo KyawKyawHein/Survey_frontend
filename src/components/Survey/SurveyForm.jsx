@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import { useState } from "react";
 import TButton from '../core/TButton';
-import SurveyQuestions from "../SurveyQuestions";
+import SurveyQuestions from "./SurveyQuestions";
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import { useSurvey } from '../../hooks/UseSurvey';
 import { useNavigate } from 'react-router-dom';
 import axiosClient from '../../axios-client';
+import { useStateContext } from '../../context/StateContext';
 
 const SurveyForm = ({id}) => {
     const nav = useNavigate();
+    const {showToast} = useStateContext()
     const [loading,setLoading] = useState(false);
     const [survey, setSurvey] = useState({
         title: "",
@@ -19,6 +21,7 @@ const SurveyForm = ({id}) => {
         questions: [],
         status: false
     })
+    console.log(survey);
 
     // const {useSurveyCreateMutation} = useSurvey()
     // const { mutateAsync:newSurvey} = useSurveyCreateMutation()
@@ -34,13 +37,18 @@ const SurveyForm = ({id}) => {
         // create or update control
         let res = null
         if(id){
-            res= axiosClient.post(`/survey/${id}`,payload)
+            res= axiosClient.put(`/survey/${id}`,payload)
         }else{
             res = axiosClient.post(`/survey`, payload)
         }
         res.then(({data})=>{
             console.log(data);
             nav('/surveys')
+            if(id){
+                showToast('Survey is updated.')
+            }else{
+                showToast('Survey is created.')
+            }
         })
         .catch((err)=>console.log(err))
     }
@@ -209,7 +217,7 @@ const SurveyForm = ({id}) => {
                     {/* Start button  */}
                     <div className="grid grid-cols-3 px-4 py-3 flex justify-end px-0 sm:px-6">
                         <div className="text-start">
-                            <TButton>Save</TButton>
+                            <TButton>{id?'Update':'Create'}</TButton>
                         </div>
                     </div>
                     {/* end button  */}

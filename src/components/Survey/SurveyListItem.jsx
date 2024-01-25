@@ -1,16 +1,13 @@
 import { ArrowTopRightOnSquareIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import React from 'react'
-import TButton from './core/TButton';
+import TButton from '../core/TButton';
 
 const SurveyListItem = (props) => {
-    const {id,image,slug,title,description} = props;
-    const onDeleteClick = ()=>{
-
-    }
+    const {id,image_url,slug,title,description,deleteSurvey} = props;
     return (
         <>
             <div className="flex flex-col py-4 px-6 shadow-md bg-white hover:bg-gray-50 h-[470px]">
-                <img src={image} alt={title}  className="w-full h-48 object-cover"  />
+                <img src={image_url} alt={title}  className="w-full h-48 object-cover"  />
                 <h4 className='mt-4 text-lg font-bold'>{title}</h4>
                 <div
                     dangerouslySetInnerHTML={{__html:description}}
@@ -28,11 +25,9 @@ const SurveyListItem = (props) => {
                             <ArrowTopRightOnSquareIcon className="w-5 h-5" />
                         </TButton>
 
-                        {id && (
-                            <TButton onClick={ev => onDeleteClick(id)} circle link color="red">
-                                <TrashIcon className="w-5 h-5" />
-                            </TButton>
-                        )}
+                        <TButton onClick={() => deleteSurvey(id)} circle link color="red">
+                            <TrashIcon className="w-5 h-5" />
+                        </TButton>
                     </div>
                 </div>
             </div>

@@ -23,11 +23,15 @@ const QuestionEditor = ({index,question,questionChange,addQuestion,deleteQuestio
     const onTypeChange = (e)=>{
         const newModel = {...model,type:e.target.value};
         if(shouldHaveOption(e.target.value)){
-            newModel.data = {
-                options: [
-                    {uuid:uuidv4(),text:''}
-                ]
+            if(!model.data.options){
+                newModel.data = {
+                    options: [
+                        { uuid: uuidv4(), text: '' }
+                    ]
+                }
             }
+        }else{
+            newModel.data = {}
         }
         setModel(newModel)
     }
@@ -96,7 +100,6 @@ const QuestionEditor = ({index,question,questionChange,addQuestion,deleteQuestio
                 {/* End question Type  */}
 
                 {/* For Option */}
-                {JSON.stringify(model)}
                 {
                     shouldHaveOption() && (
                         <>
@@ -136,7 +139,7 @@ const QuestionEditor = ({index,question,questionChange,addQuestion,deleteQuestio
                     </label>
                     <textarea name="questionDescription" id="questionDescription" cols="30" rows="3"
                         className="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        value={model.description}
+                        value={model.description??''}
                         onChange={(e)=>setModel({...model,description:e.target.value})}
                     >
                     </textarea>

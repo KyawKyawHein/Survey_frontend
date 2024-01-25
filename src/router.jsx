@@ -6,6 +6,7 @@ import Login from "./views/Login";
 import Register from "./views/Register";
 import Dashboard from "./views/Dashboard";
 import SurveyView from "./views/SurveyView";
+import SurveyPublicView from "./views/SurveyPublicView";
 
 const router = createBrowserRouter([
     {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
                 element: <Register />,
             },
         ],
+    },
+    {
+        path: "/survey/public/:slug",
+        element : <SurveyPublicView/>
     }
     
 ]);

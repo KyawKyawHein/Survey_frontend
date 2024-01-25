@@ -12,7 +12,7 @@ const SurveyQuestions = ({questions,onQuestionUpdate}) => {
             id: uuidv4(),
             type: "text",
             question: "",
-            description: "",
+            description: " ",
             data: {},
         };
          spliceModel.splice(index + 1, 0, newObj);
